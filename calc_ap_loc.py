@@ -16,10 +16,10 @@ def calc_iou(a,b):
 
 
 
-def calc_res_recall(path_gt,path_res,res):
+def calc_res_recall(path_gt,path_res,path_iou):
 	flag = 0
 	total = 0
-	fff = open(res,'w')
+	fff = open(path_iou,'w')
 	for filename in os.listdir(path_gt):
 		if filename.endswith(".txt"):
 			imgname = filename.split('.')[0]
@@ -57,10 +57,10 @@ def calc_res_recall(path_gt,path_res,res):
 	print (flag/total)
 
 
-def calc_res_precision(path_gt,path_res):
+def calc_res_precision(path_gt,path_res,path_iou):
 	flag = 0
 	total = 0
-	#fff = open('conclude.txt','w')
+	fff = open(path_iou,'w')
 	for filename in os.listdir(path_gt):
 		if filename.endswith(".txt"):
 			imgname = filename.split('.')[0]
@@ -86,14 +86,14 @@ def calc_res_precision(path_gt,path_res):
 					if t > score:
 						score = t
 				
-				#fff.write(imgname + ',' + str(score)+ '\n')
+				fff.write(imgname + ',' + str(score)+ '\n')
 
 				if score > 0.5:
 					flag +=1
 		
 			f.close()
 			ff.close()
-	#fff.close()
+	fff.close()
 	print (total)
 	print (flag/total)
 
@@ -102,7 +102,7 @@ def calc_res_precision(path_gt,path_res):
 
                     
 
-calc_res_precision('/Users/ray/Desktop/test-car/text','/Users/ray/Desktop/test-car/results_1')
+calc_res_precision('/Users/ray/Desktop/test-car/text','/Users/ray/Desktop/test-car/results_1','conclude.txt')
 
 
 #print(calc_iou([1035,532.0,1118,553.0],[1034,528,1118,559]))

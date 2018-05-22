@@ -2,6 +2,7 @@
 import json
 import pandas as pd
 import cv2
+import os
 
 
 def preproc(path):
@@ -23,11 +24,18 @@ def json2list(txt):
 	return data
 
 
-
-def get_carno_loc(json_path,frame_path,text_path,img_path,offsize=0)
+#提取车牌定位信息，frame_path为帧图片路径，text_path和img_path分别为结果的文本和图片路径
+def get_carno_loc(json_path,frame_path,text_path,img_path,offsize=0):
 	text = preproc(json_path)
-
 	a = json2list(text)
+
+	if os.path.exists(text_path):
+		shutil.rmtree(text_path)
+	os.makedirs(text_path)
+
+	if os.path.exists(img_path):
+		shutil.rmtree(img_path)
+	os.makedirs(img_path)
 
 	for i in range(len(a)):
 		
@@ -41,10 +49,13 @@ def get_carno_loc(json_path,frame_path,text_path,img_path,offsize=0)
 		f.close()
 
 
-
+#提取车牌号信息，res_path为结果文本路径
 def get_carno(json_path,res_path,offsize=0):
 	text = preproc(json_path)
-	a = json2list(text)	
+	a = json2list(text)
+	if os.path.exists(res_path):
+		shutil.rmtree(res_path)
+	os.makedirs(res_path)
 
 	f = open(res_path,'wb')
 	
@@ -57,6 +68,6 @@ def get_carno(json_path,res_path,offsize=0):
 			#cv2.imwrite('./img-2_test/img_'+str(i)+'.jpg',img)	
 	f.close()
 
-
+get_carno_loc('carinforesult-new1.json','./frame-1','text-1','img-1',offsize=0)
 
 
